@@ -1,0 +1,29 @@
+
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    ext.vertxVersion = "4.2.7"
+    implementation "io.vertx:vertx-core:$vertxVersion"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// compileJava {
+//     sourceCompatibility = "17"
+//     targetCompatibility = "17"
+// }
+
+task reproducer(type: JavaExec) {
+    group = "reproducer"
+    description = "Runs reproducer"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "reproducer.Main"
+}
