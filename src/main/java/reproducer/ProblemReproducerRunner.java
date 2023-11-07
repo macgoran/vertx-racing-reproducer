@@ -35,42 +35,28 @@ public class ProblemReproducerRunner extends AbstractVerticle {
 
     private Future<Void> run_ExecuteBlocking_Case(Void v) {
         Supplier<Future<Object>> futureSupplier = () -> {
-            return vertx
-                    .executeBlocking(resultPromise -> {
-                        resultPromise.complete("result");
-                    });
+            return vertx.executeBlocking(() -> "result");
         };
         return new ProblemReproducerLoop("executeBlocking()", 100_000, futureSupplier).run();
     }
 
     private Future<Void> run_Mapped_ExecuteBlocking_Case(Void v) {
         Supplier<Future<Object>> futureSupplier = () -> {
-            return vertx
-                    .executeBlocking(resultPromise -> {
-                        resultPromise.complete("result");
-                    })
-                    .map(result -> result);
+            return vertx.executeBlocking(() -> "result").map(result -> result);
         };
         return new ProblemReproducerLoop("Mapped executeBlocking()", 100_000, futureSupplier).run();
     }
 
     private Future<Void> run_OrderedFalse_ExecuteBlocking_Case(Void v) {
         Supplier<Future<Object>> futureSupplier = () -> {
-            return vertx
-                    .executeBlocking(resultPromise -> {
-                        resultPromise.complete("result");
-                    }, false);
+            return vertx.executeBlocking(() -> "result", false);
         };
         return new ProblemReproducerLoop("ordered=false executeBlocking()", 100_000, futureSupplier).run();
     }
 
     private Future<Void> run_Mapped_OrderedFalse_ExecuteBlocking_Case(Void v) {
         Supplier<Future<Object>> futureSupplier = () -> {
-            return vertx
-                    .executeBlocking(resultPromise -> {
-                        resultPromise.complete("result");
-                    }, false)
-                    .map(result -> result);
+            return vertx.executeBlocking(() -> "result", false).map(result -> result);
         };
         return new ProblemReproducerLoop("Mapped ordered=false executeBlocking()", 100_000, futureSupplier).run();
     }
